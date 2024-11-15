@@ -5,9 +5,9 @@
 #include <stdio.h> // Para sprintf
 
 // Definición de variables globales
-uint32_t voltaje = 220;
-uint32_t corriente = 53;
-uint32_t factor_potencia = 5;
+uint32_t voltaje = 220;  // en V
+uint32_t corriente = 53;  // en A
+uint32_t factor_potencia = 5; // Adimensional [fp=cos(ϕ)]
 uint32_t potencia;
 
 void i2c_setup(void) {
