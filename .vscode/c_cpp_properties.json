@@ -12,6 +12,7 @@
                 "/home/skynet/Repo/-AFKS-/src",
                 "/home/skynet/.platformio/packages/framework-libopencm3",
                 "/home/skynet/.platformio/packages/framework-libopencm3/include",
+                "/home/skynet/Repo/-AFKS-/.pio/libdeps/genericSTM32F103C8/Unity/src",
                 ""
             ],
             "browse": {
@@ -21,6 +22,7 @@
                     "/home/skynet/Repo/-AFKS-/src",
                     "/home/skynet/.platformio/packages/framework-libopencm3",
                     "/home/skynet/.platformio/packages/framework-libopencm3/include",
+                    "/home/skynet/Repo/-AFKS-/.pio/libdeps/genericSTM32F103C8/Unity/src",
                     ""
                 ]
             },
