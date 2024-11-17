@@ -8,21 +8,21 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "/home/skynet/Repo/-AFKS-/include",
-                "/home/skynet/Repo/-AFKS-/src",
-                "/home/skynet/.platformio/packages/framework-libopencm3",
-                "/home/skynet/.platformio/packages/framework-libopencm3/include",
-                "/home/skynet/Repo/-AFKS-/.pio/libdeps/genericSTM32F103C8/Unity/src",
+                "E:/Universidad/En curso/Digital lll/Git-Tp/-AFKS-/include",
+                "E:/Universidad/En curso/Digital lll/Git-Tp/-AFKS-/src",
+                "C:/Users/mauro/.platformio/packages/framework-libopencm3",
+                "C:/Users/mauro/.platformio/packages/framework-libopencm3/include",
+                "E:/Universidad/En curso/Digital lll/Git-Tp/-AFKS-/.pio/libdeps/genericSTM32F103C8/Unity/src",
                 ""
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "/home/skynet/Repo/-AFKS-/include",
-                    "/home/skynet/Repo/-AFKS-/src",
-                    "/home/skynet/.platformio/packages/framework-libopencm3",
-                    "/home/skynet/.platformio/packages/framework-libopencm3/include",
-                    "/home/skynet/Repo/-AFKS-/.pio/libdeps/genericSTM32F103C8/Unity/src",
+                    "E:/Universidad/En curso/Digital lll/Git-Tp/-AFKS-/include",
+                    "E:/Universidad/En curso/Digital lll/Git-Tp/-AFKS-/src",
+                    "C:/Users/mauro/.platformio/packages/framework-libopencm3",
+                    "C:/Users/mauro/.platformio/packages/framework-libopencm3/include",
+                    "E:/Universidad/En curso/Digital lll/Git-Tp/-AFKS-/.pio/libdeps/genericSTM32F103C8/Unity/src",
                     ""
                 ]
             },
@@ -33,7 +33,7 @@
                 "F_CPU=72000000L",
                 ""
             ],
-            "compilerPath": "/home/skynet/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc",
+            "compilerPath": "C:/Users/mauro/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc.exe",
             "compilerArgs": [
                 "-mthumb",
                 "-mcpu=cortex-m3",

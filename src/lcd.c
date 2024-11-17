@@ -1,3 +1,4 @@
+
 #include "lcd.h"
 
 /** Set the EN line high to latch the command, then set it low */

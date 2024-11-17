@@ -2,7 +2,7 @@
  * @file lcd.h
  * @brief LCD driver using STM32 microcontroller and I2C expander PCF8574.
  *
- * This file contains functions to initialize and control a 16x2 LCD
+ * This file contains functions to initialize and control a 16x4 LCD
  * via I2C protocol, using an STM32 microcontroller and a PCF8574 as an I2C expander.
  */
 
@@ -336,4 +336,3 @@ void lcd_set_cursor(uint8_t row, uint8_t col);
  * @param ms Time to wait in milliseconds.
  */
 void delay_ms(uint32_t ms);
-
