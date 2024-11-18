@@ -1,6 +1,6 @@
 # ||AFKS||
 
-## Home Energy Consumption Monitor with LCD Display
+## ⚡Home Energy Consumption Monitor with LCD Display
 
 Welcome all! In this repository, you will hopefully find everything you need to carry out the **Home Energy Consumption Monitor** project. 
 
@@ -14,7 +14,7 @@ The information is shown on a display, allowing real-time readings of measuremen
 
 ---
 
-## Key Features
+## 🚀Key Features
 
 ### Energy Consumption Monitoring:
 - Current and voltage measuring through sensors connected to the BluePill's ADC.
@@ -35,7 +35,7 @@ The information is shown on a display, allowing real-time readings of measuremen
 
 ---
 
-## Hardware
+## :hammer_and_wrench:Hardware
 
 - **MCU**: STM32F103C8T6 BluePill  
 - **SCT013**: Current sensor  
@@ -45,7 +45,7 @@ The information is shown on a display, allowing real-time readings of measuremen
 
 ---
 
-## Software
+## :desktop_computer:Software
 
 - **PlatformIO** / **STM32CubeIDE**  
 - **Libraries**:  
@@ -54,14 +54,14 @@ The information is shown on a display, allowing real-time readings of measuremen
 
 ---
 
-## Schematic Diagram
+## :electric_plug:Schematic Diagram
 
 ![Schematic Diagram](https://github.com/user-attachments/assets/85041b3e-340c-4535-aa57-fe148c72804a)
 Arrangement of the components used in the project with their respective connections.
 
 ---
 
-## Results
+## :trophy:Results
 
 The project will include:
 - **Project exposition**: A complete explanation of the code and a hardware overview.  
