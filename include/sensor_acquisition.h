@@ -6,10 +6,12 @@
 
  */
 
-#include <libopencm3/stm32/adc.h>
-#include <libopencm3/stm32/dma.h>
-#include <libopencm3/stm32/gpio.h>
-#include <libopencm3/stm32/rcc.h>
+#include "libopencm3/stm32/adc.h"
+#include "libopencm3/stm32/dma.h"
+#include "libopencm3/stm32/gpio.h"
+#include "libopencm3/stm32/rcc.h"
+#include "lcd.h"
+#include "stdio.h"
 
 /** @brief Number of ADC samples to collect for each channel in DMA. */
 #define ADC_SAMPLE_COUNT 10
@@ -32,18 +34,10 @@
 /** @brief GPIO pin for current input connected to ADC channel 1. */
 #define ADC_CURRENT_PIN GPIO1
 
-/** @brief DMA channel for voltage data transfer. */
-#define ADC_DMA_CHANNEL_VOLTAGE DMA_CHANNEL1
-
-/** @brief DMA channel for current data transfer. */
-#define ADC_DMA_CHANNEL_CURRENT DMA_CHANNEL2
-
 
 /** @brief ADC sample time configuration. */
-#define ADC_SAMPLE_TIME ADC_SMPR_SMP_239DOT5CYC
+#define SAMPLE_TIME_CYCLES ADC_SMPR_SMP_28DOT5CYC
 
-/** @brief Conversion factor for ADC values to percentage representation. */
-#define ADC_PERCENTAGE_CONVERSION (24.42e-3) / ADC_SAMPLE_COUNT
 
 #define ADC_BUFFER_SIZE (ADC_SAMPLE_COUNT * ADC_CHANNEL_COUNT)  // Tamaño del buffer para almacenar las muestras ADC
 
@@ -62,7 +56,7 @@
  * The function should be called once at the start of the program to initialize the hardware
  * before any ADC readings are taken.
  */
-void configure_adc_pins_and_dma(void);
+void config_adc_dma(void);
 
 /**
  * @brief Reads the sensor data from the ADC buffer and calculates the average values.
