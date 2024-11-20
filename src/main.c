@@ -41,7 +41,6 @@ void config_gpio(void) {
 
 
 
-
 int main(void) {
     rcc_clock_setup_pll(&rcc_hse_configs[RCC_CLOCK_HSE8_72MHZ]);
     config_gpio();
