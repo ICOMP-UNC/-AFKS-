@@ -1,8 +1,9 @@
 #include "refresh.h"
+#include "lcd.h"
+#include "stdio.h"
+#include "timer_exti.h"
 
-
-
-int average_phase_shift(void)
+float average_phase_shift(void)
 {
     uint32_t phase_shift=0;
 
@@ -39,7 +40,7 @@ float get_sensor_values(uint8_t channel) {
 }
 
 
-void update_display(void) {
+void update_values(void) {
       char line[17];
     float power = get_sensor_values(0) * get_sensor_values(1);
  
@@ -60,22 +61,29 @@ void update_display(void) {
     lcd_print_string(line);
 
     
-    snprintf(line, sizeof(line), "Phase : %u mS", (unsigned int) average_phase_shift/MS_CONVERSION);
+    snprintf(line, sizeof(line), "Phase : %u mS", (unsigned int) average_phase_shift()/MS_CONVERSION);
     lcd_set_cursor(3, 0);
     lcd_print_string(line);
     
 }
+
+
 
 void set_pwm_duty_cycle(uint16_t duty) {
     if (duty > 1000) duty = 1000; // Limitar el duty cycle
     timer_set_oc_value(TIM1, TIM_OC3, duty); // Configurar el valor en TIM1_CH3
 }
 
+
+
+
 void adjust_led_intensity(void) {
-    if (pot_get_value(1) < CURRENT_MIN) {
+    float current = get_sensor_values(1); // Lee el valor del canal 1 (corriente)
+
+    if (current < CURRENT_MIN) {
         set_pwm_duty_cycle(0); // LED apagado
-    } else if (pot_get_value(1) <= CURRENT_MAX) {
-        uint16_t duty = (uint16_t)((pot_get_value(1) - CURRENT_MIN) * 1000 / (CURRENT_MAX - CURRENT_MIN));
+    } else if (current <= CURRENT_MAX) {
+        uint16_t duty = (uint16_t)((current - CURRENT_MIN) * 1000 / (CURRENT_MAX - CURRENT_MIN));
         set_pwm_duty_cycle(duty); // Ajustar intensidad del LED
     } else {
         set_pwm_duty_cycle(1000); // Máxima intensidad

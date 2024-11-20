@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "adc.h": "c"
+        "adc.h": "c",
+        "refresh.h": "c",
+        "stdio.h": "c"
     }
 }

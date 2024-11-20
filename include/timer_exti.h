@@ -86,11 +86,7 @@ void TMR_setup_PF(void);
 void EXTI_setup_PF(void);  
 
 
-/**
- * @brief average of the stored phase shift values
- * This function iterates through the phase shift buffer and calculates the average of these values.
- */
-void average_phase_shift(void);
+
 
 
 /**

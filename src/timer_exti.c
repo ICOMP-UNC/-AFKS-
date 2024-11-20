@@ -74,8 +74,6 @@ void exti3_isr(void)
     else if(counter==N_PHASE_SHIFT)
     {
         average_phase_shift();
-        calculate_power_factor();
-        clear_phase_shift();
         counter=0;
     }
     timer_disable_counter(TIM2);
