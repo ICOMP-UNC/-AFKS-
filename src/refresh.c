@@ -3,16 +3,9 @@
 #include "stdio.h"
 #include "timer_exti.h"
 
-float average_phase_shift(void)
-{
-    uint32_t phase_shift=0;
 
-    for(int i=0; i<N_PHASE_SHIFT; i++)
-    {
-        phase_shift+=phase_shift_buffer[i];
-    }
-     return (phase_shift/N_PHASE_SHIFT) ;
-}
+
+
 
 
 
@@ -61,7 +54,7 @@ void update_values(void) {
     lcd_print_string(line);
 
     
-    snprintf(line, sizeof(line), "Phase : %u mS", (unsigned int) average_phase_shift()/MS_CONVERSION);
+    snprintf(line, sizeof(line), "Phase : %u mS", (unsigned int) average_phase_shift /10);
     lcd_set_cursor(3, 0);
     lcd_print_string(line);
     

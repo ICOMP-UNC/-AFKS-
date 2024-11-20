@@ -23,13 +23,7 @@
 
 #define FALSE 0
 
-/**
- * @brief Configures the system clock.
- * 
- * Sets the system clock to 72 MHz using the external high-speed oscillator (HSE).
- */
 
-void setup_gpio(void);
 
 
 

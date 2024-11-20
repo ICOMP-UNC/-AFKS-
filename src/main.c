@@ -3,7 +3,7 @@
 
 int main(void) {
     system_init();
-    setup_gpio();
+    gpio_setup();
     config_adc_dma();
     TMR_setup_PF();
     TMR_setup_pwm();

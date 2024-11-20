@@ -50,12 +50,9 @@
 
 #define PERIOD_TM1 1000
 
-//uint32_t phase_shift_buffer[N_PHASE_SHIFT]={0};
 
 
-static volatile uint32_t phase_shift_buffer[N_PHASE_SHIFT]; /**< Buffer para almacenar los desplazamientos de fase. */
 
-static volatile uint32_t  counter=0;
 
 
 /**
@@ -96,3 +93,6 @@ void EXTI_setup_PF(void);
  */
 
 void TMR_setup_pwm(void);
+
+float average_phase_shift(void);
+

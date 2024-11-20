@@ -1,10 +1,17 @@
+
 #include "timer_exti.h"
+
+static volatile uint32_t phase_shift_buffer[N_PHASE_SHIFT]; /**< Buffer para almacenar los desplazamientos de fase. */
+
+static volatile uint32_t  counter=0;
+
+static volatile uint32_t phase_shift=0;
 
 void system_init(void)
 {
     rcc_clock_setup_pll(&rcc_hse_configs[RCC_CLOCK_HSE8_72MHZ]);
     rcc_periph_clock_enable(RCC_GPIOA);
-    rrc_periph_clock_enable(RCC_GPIOB);
+    rcc_periph_clock_enable(RCC_GPIOB);
     rcc_periph_clock_enable(RCC_TIM1);
     rcc_periph_clock_enable(RCC_TIM2);
     rcc_periph_clock_enable(RCC_AFIO);
@@ -54,6 +61,8 @@ void EXTI_setup_PF(void)
 }
 
 
+
+
 void exti2_isr(void)
 {
     exti_reset_request(EXTI2);
@@ -73,7 +82,7 @@ void exti3_isr(void)
     }
     else if(counter==N_PHASE_SHIFT)
     {
-        average_phase_shift();
+        phase_shift = average_phase_shift();
         counter=0;
     }
     timer_disable_counter(TIM2);
@@ -81,3 +90,12 @@ void exti3_isr(void)
 }
 
 
+float average_phase_shift(void)
+{
+
+    for(int i=0; i<N_PHASE_SHIFT; i++)
+    {
+        phase_shift+=phase_shift_buffer[i];
+    }
+   return  (phase_shift / N_PHASE_SHIFT) ;
+}
