@@ -19,13 +19,13 @@
  */
 int main(void) {
     // System and peripheral initialization
-    system_init();        /**< Initialize system clock and basic configuration. */
-    gpio_setup();         /**< Configure GPIO pins for input/output as required. */
-    config_adc_dma();     /**< Set up ADC with DMA for continuous data acquisition. */
-    TMR_setup_PF();       /**< Configure periodic timer for regular updates. */
-    TMR_setup_pwm();      /**< Configure a timer for PWM signal generation. */
-    EXTI_setup_PF();      /**< Set up external interrupts for specific GPIO pins. */
-    lcd_init();           /**< Initialize the LCD display for interaction. */
+    system_init();        /* Initialize system clock and basic configuration. */
+    gpio_setup();         /* Configure GPIO pins for input/output as required. */
+    config_adc_dma();     /* Set up ADC with DMA for continuous data acquisition. */
+    TMR_setup_PF();       /* Configure periodic timer for regular updates. */
+    TMR_setup_pwm();      /* Configure a timer for PWM signal generation. */
+    EXTI_setup_PF();      /* Set up external interrupts for specific GPIO pins. */
+    lcd_init();           /* Initialize the LCD display for interaction. */
 
     // Main loop
     while (TRUE) {
