@@ -1,6 +1,14 @@
+/**
+ * @file adc_dma.c
+ * @brief Implementation of ADC and DMA configuration for multi-channel data acquisition.
+ * 
+ * This file contains the implementation of the `config_adc_dma` function, which
+ * sets up the ADC (Analog-to-Digital Converter) and DMA (Direct Memory Access)
+ * peripherals for continuous acquisition of analog signals.
+ * 
+ * @note This file is intended to be used with its corresponding header file `adc_dma.h`.
+ */
 #include "adc_dma.h"
-
-// Prototipos de las funciones
 
 void config_adc_dma(void) {
     // Enable peripheral clocks
