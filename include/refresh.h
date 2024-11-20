@@ -19,8 +19,10 @@
 /** @brief Maximum current value for PWM scaling. */
 #define CURRENT_MAX 10
 
+/** @brief True valor declaration. */
 #define TRUE 1
 
+/** @brief False valor declaration. */
 #define FALSE 0
 
 
@@ -44,6 +46,12 @@ void set_pwm_duty_cycle(uint16_t duty);
 void pwm_implementation(void);
 
 
+/**
+ * @brief Update and display the sensor values and calculated variables on an LCD screen.
+ * This function retrieves sensor values for voltage and current, calculates the power, 
+ * and displays these values along with the phase shift on a 4-line LCD. The values are
+ * formatted as strings for better readability. 
+ */
 void update_values(void);
 
 
@@ -71,9 +79,13 @@ float get_sensor_values(uint8_t channel);
  * @brief average of the stored phase shift values
  * This function iterates through the phase shift buffer and calculates the average of these values.
  * 
+ * @return An average of the values stored in the buffer.
  */
 float average_phase_shift(void);
 
 
-
+/**
+ * @brief Led brightness
+ * This function adjusts the LED brightness based on critical consumption values, using the PWM module for this purpose.
+ */
 void adjust_led_intensity(void);
