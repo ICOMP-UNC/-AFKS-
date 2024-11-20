@@ -1,15 +1,14 @@
-#include "sensor_acquisition.h"
-
-
-
-static volatile uint16_t potBuff[ADC_BUFFER_SIZE];  // Buffer compartido para ambos canales
-
-// Prototipos de las funciones
-
-void config_gpio(void);
-float pot_get_value(uint8_t channel);
-void pot_leds_control(void);
-void update_display(void);
+/**
+ * @file adc_dma.c
+ * @brief Implementation of ADC and DMA configuration for multi-channel data acquisition.
+ * 
+ * This file contains the implementation of the `config_adc_dma` function, which
+ * sets up the ADC (Analog-to-Digital Converter) and DMA (Direct Memory Access)
+ * peripherals for continuous acquisition of analog signals.
+ * 
+ * @note This file is intended to be used with its corresponding header file `adc_dma.h`.
+ */
+#include "adc_dma.h"
 
 void config_adc_dma(void) {
     // Enable peripheral clocks
@@ -24,7 +23,7 @@ void config_adc_dma(void) {
     dma_channel_reset(DMA1, DMA_CHANNEL1);
     dma_set_priority(DMA1, DMA_CHANNEL1, DMA_CCR_PL_VERY_HIGH);
     dma_set_peripheral_address(DMA1, DMA_CHANNEL1, (uint32_t)&ADC_DR(ADC1));
-    dma_set_memory_address(DMA1, DMA_CHANNEL1, (uint32_t)potBuff);
+    dma_set_memory_address(DMA1, DMA_CHANNEL1, (uint32_t)ADC_BUFFER);
     dma_set_number_of_data(DMA1, DMA_CHANNEL1, ADC_BUFFER_SIZE);
     dma_set_memory_size(DMA1, DMA_CHANNEL1, DMA_CCR_MSIZE_16BIT);
     dma_set_peripheral_size(DMA1, DMA_CHANNEL1, DMA_CCR_PSIZE_16BIT);
@@ -60,28 +59,4 @@ void config_adc_dma(void) {
 
 
 
-float pot_get_value(uint8_t channel) {
-    
-    uint32_t ac = 0;
 
-    // Sum values in the buffer based on the selected channel
-    for (uint8_t i = 0; i < ADC_SAMPLE_COUNT; i++) {
-        ac += potBuff[channel + i * ADC_CHANNEL_COUNT];  // Acceso intercalado por canal
-    }
-
-    return (float)ac / (float)ADC_SAMPLE_COUNT;
-}
-
-void update_display(void) {
-    char line[17];
-
-    // Show ADC0 value on the first line
-    snprintf(line, sizeof(line), "Volt A0: %u V", (unsigned int)pot_get_value(0));
-    lcd_set_cursor(0, 0);
-    lcd_print_string(line);
-
-    // Show ADC1 value on the second line
-    snprintf(line, sizeof(line), "Volt A1: %u V", (unsigned int)pot_get_value(1));
-    lcd_set_cursor(1, 0);
-    lcd_print_string(line);
-}

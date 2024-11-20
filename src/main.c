@@ -1,57 +1,36 @@
-#include "lcd.h"
-#include "sensor_acquisition.h"
+/**
+ * @file main.c
+ * @brief Main program for system initialization and LCD control.
+ *
+ * This program initializes the system, sets up peripherals like GPIO, ADC, DMA, timers, and interrupts,
+ * and continuously updates values to interact with the LCD or other peripherals.
+ */
 
+#include "refresh.h"
 
-void pot_leds_control(void) {
-    float potValue0 = pot_get_value(0);  // Get the value for ADC0
-    float potValue1 = pot_get_value(1);  // Get the value for ADC1
-
-    // LED control logic based on ADC0 (A0)
-    if (potValue0 < 50.0) {
-        gpio_set(GPIOA, GPIO10);  // Green LED
-    } else {
-        gpio_clear(GPIOA, GPIO10);
-    }
-
-    if (potValue0 > 50.0) {
-        gpio_set(GPIOA, GPIO11);  // Orange LED
-    } else {
-        gpio_clear(GPIOA, GPIO11);
-    }
-
-    if (potValue0 > 75.0) {
-        gpio_set(GPIOA, GPIO12);  // Red LED
-    } else {
-        gpio_clear(GPIOA, GPIO12);
-    }
-}
-
-void config_gpio(void) {
-    // Enable peripheral clocks for GPIOA
-    rcc_periph_clock_enable(RCC_GPIOA);
-
-    // Configure the GPIO pins for the LEDs
-    gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_2_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO10);  // Green LED
-    gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_2_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO11);  // Orange LED
-    gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_2_MHZ, GPIO_CNF_OUTPUT_PUSHPULL, GPIO12);  // Red LED
-}
-
-
-
-
-
-
-
+/**
+ * @brief Main entry point of the program.
+ *
+ * This function performs the initial setup of the system, including initializing peripherals
+ * such as GPIO, ADC with DMA, timers, external interrupts, and the LCD. Once initialized, it enters
+ * an infinite loop to repeatedly update values.
+ * 
+ * @return Always returns 0 (success).
+ */
 int main(void) {
-    rcc_clock_setup_pll(&rcc_hse_configs[RCC_CLOCK_HSE8_72MHZ]);
-    config_gpio();
-    config_adc_dma();
-    lcd_init();
+    // System and peripheral initialization
+    system_init();        /* Initialize system clock and basic configuration. */
+    gpio_setup();         /* Configure GPIO pins for input/output as required. */
+    config_adc_dma();     /* Set up ADC with DMA for continuous data acquisition. */
+    TMR_setup_PF();       /* Configure periodic timer for regular updates. */
+    TMR_setup_pwm();      /* Configure a timer for PWM signal generation. */
+    EXTI_setup_PF();      /* Set up external interrupts for specific GPIO pins. */
+    lcd_init();           /* Initialize the LCD display for interaction. */
 
-    while (1) {
-        pot_leds_control();
-        update_display();
+    // Main loop
+    while (TRUE) {
+        update_values();  /* Continuously update values based on inputs or system state. */
     }
-    return 0;
-}
 
+    return 0; // Should never be reached
+}
