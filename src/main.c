@@ -29,7 +29,7 @@ int main(void) {
 
     // Main loop
     while (TRUE) {
-        update_values();  /**< Continuously update values based on inputs or system state. */
+        update_values();  /* Continuously update values based on inputs or system state. */
     }
 
     return 0; // Should never be reached
