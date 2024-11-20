@@ -65,4 +65,4 @@ Arrangement of the components used in the project with their respective connecti
 
 The project will include:
 - **Project exposition**: A complete explanation of the code and a hardware overview.  
-- **Video demonstration**: [YouTube video link](#)  
+- **Video demonstration**: [https://youtu.be/-5vvS6dCAZk?si=XjdbSiEEBUvCcszg](#)  
