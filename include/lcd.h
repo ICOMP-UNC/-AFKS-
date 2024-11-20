@@ -9,6 +9,7 @@
 #include "libopencm3/stm32/gpio.h"
 #include "libopencm3/stm32/i2c.h"
 #include "libopencm3/stm32/rcc.h"
+#include "libopencm3/cm3/systick.h"
 
 /** I2C address of the PCF8574. */
 #define PCF8574_ADDRESS 0x27
@@ -74,6 +75,13 @@
 
 /** Register select bit. */
 #define LCD_RS 0B00000001
+
+/*Frequency of Systick in Hz (1mS)*/
+#define SYSTICK_FREQUENCY 1000
+
+
+
+
 
 /**
  * @brief Initializes the LCD, pins, and I2C communication.
@@ -157,11 +165,33 @@ void lcd_clear(void);
 void lcd_set_cursor(uint8_t row, uint8_t col);
 
 /**
- * @brief Delays execution for a specified time in milliseconds.
- *
- * This function introduces a delay by performing a software loop, which
- * is useful for timing-sensitive operations on the LCD.
- *
- * @param ms Time to wait in milliseconds.
+ * @brief Block for a specified number of milliseconds.
+ * 
+ * This function uses the global millisecond counter `system_millis` to
+ * implement a blocking delay. The function returns once the specified
+ * amount of time has elapsed.
+ * 
+ * @param ms The delay duration in milliseconds.
  */
 void delay_ms(uint32_t ms);
+
+
+/**
+ * @brief Configure the SysTick timer to generate interrupts every 1 ms.
+ * 
+ * This function initializes the SysTick timer using the AHB clock as the
+ * source and sets it to generate periodic interrupts with a frequency
+ * defined by `SYSTICK_FREQUENCY`. The SysTick interrupt is also enabled.
+ */
+
+void systick_setup(void);
+
+
+/**
+ * @brief SysTick interrupt handler.
+ * 
+ * This function is called every time the SysTick timer generates an interrupt,
+ * which occurs at a rate defined by `SYSTICK_FREQUENCY`. It increments the
+ * global millisecond counter `system_millis`.
+ */
+void sys_tick_handler(void);

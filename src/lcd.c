@@ -10,6 +10,8 @@
 
 #include "lcd.h"
 
+volatile uint32_t sys_milis = 0;  // Variable to store the number of milliseconds elapsed
+
 /**
  * @brief Sends a pulse to the LCD's Enable (EN) pin to latch data.
  * 
@@ -58,6 +60,8 @@ void lcd_send_byte(uint8_t byte, uint8_t mode) {
  * display settings (e.g., 2-line display, no cursor blinking). The LCD is cleared after initialization.
  */
 void lcd_init(void) {
+    systick_setup();
+
     rcc_periph_clock_enable(RCC_GPIOB);
     rcc_periph_clock_enable(RCC_I2C1);
 
@@ -146,15 +150,36 @@ void lcd_set_cursor(uint8_t row, uint8_t col) {
  * 
  * @param ms The number of milliseconds to delay.
  */
-void delay_ms(uint32_t ms) {
-    for (uint32_t i = 0; i < ms * 8000; i++) {
+
+void delay_ms(uint32_t ms)
+{
+    uint32_t start = sys_milis;
+    while ((sys_milis - start) < ms) {
+        // Wait for the specified time to elapse
         __asm__("nop");
     }
 }
 
 
-void delay_ms(uint32_t ms) {
-    for (uint32_t i = 0; i < ms * 8000; i++) {
-        __asm__("nop");
-    }
+void systick_setup(void)
+{
+    // Set the reload value for a 1 ms period
+    systick_set_reload(rcc_ahb_frequency / SYSTICK_FREQUENCY - 1);
+
+    // Select the AHB clock as the SysTick clock source
+    systick_set_clocksource(STK_CSR_CLKSOURCE_AHB);
+
+    // Enable the SysTick counter
+    systick_counter_enable();
+
+    // Enable SysTick interrupts
+    systick_interrupt_enable();
 }
+
+void sys_tick_handler(void)
+{
+    // Increment the millisecond counter
+    sys_milis++;
+}
+
+
