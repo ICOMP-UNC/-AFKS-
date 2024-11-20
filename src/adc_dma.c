@@ -1,15 +1,6 @@
 #include "adc_dma.h"
 
-
-
-
-
 // Prototipos de las funciones
-
-void config_gpio(void);
-float pot_get_value(uint8_t channel);
-void pot_leds_control(void);
-void update_display(void);
 
 void config_adc_dma(void) {
     // Enable peripheral clocks
