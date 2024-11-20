@@ -66,3 +66,4 @@ Arrangement of the events on a state machine diagram in order to model and under
 The project will include:
 - **Project exposition**: A complete explanation of the code and a hardware overview.  
 - **Video demonstration**: https://youtu.be/-5vvS6dCAZk?si=XjdbSiEEBUvCcszg
+- **Images of the procedures**: https://docs.google.com/document/d/1DifapGZ7ypS7cmhRvBSe5U7aHENBWFwOeN3Th9-sfKg/edit?usp=sharing
