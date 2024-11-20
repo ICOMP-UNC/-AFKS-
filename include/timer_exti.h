@@ -44,10 +44,17 @@
 
 #define MS_CONVERSION 10 // conversion de us a mS
 
+#define PREESCALER_TM1 72
+
+#define PREESCALER_TM2 7200
+
+#define PERIOD_TM1 1000
+
 //uint32_t phase_shift_buffer[N_PHASE_SHIFT]={0};
 
 
 static volatile uint32_t phase_shift_buffer[N_PHASE_SHIFT]; /**< Buffer para almacenar los desplazamientos de fase. */
+
 static volatile uint32_t  counter=0;
 
 
@@ -55,13 +62,13 @@ static volatile uint32_t  counter=0;
  * @brief Enable the clock for the involved modules.
  * This function enables the clock for GPIO, EXTI, and TMR2
  */
-void SystemInit_PF(void);
+void system_init(void);
 
 /**
  * @brief in and port configuration
  * This function configures the pins for EXTI as inputs with pull-down resistors
  */
-void GPIO_setup_PF(void);
+void gpio_setup(void);
 
 /**
  * @brief Timer2 configuration
@@ -84,3 +91,12 @@ void EXTI_setup_PF(void);
  * This function iterates through the phase shift buffer and calculates the average of these values.
  */
 void average_phase_shift(void);
+
+
+/**
+ * @brief Configures Timer 1 for PWM generation.
+ * 
+ * Initializes Timer 1 to generate a PWM signal with a frequency of 1 kHz on channel 3.
+ */
+
+void TMR_setup_pwm(void);

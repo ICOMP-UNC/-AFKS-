@@ -1,8 +1,5 @@
 #include "refresh.h"
-#include "adc_dma.h"
-#include "lcd.h"
-#include "stdio.h"
-#include "timer_exti.h"
+
 
 
 int average_phase_shift(void)
@@ -68,3 +65,22 @@ void update_display(void) {
     lcd_print_string(line);
     
 }
+
+void set_pwm_duty_cycle(uint16_t duty) {
+    if (duty > 1000) duty = 1000; // Limitar el duty cycle
+    timer_set_oc_value(TIM1, TIM_OC3, duty); // Configurar el valor en TIM1_CH3
+}
+
+void adjust_led_intensity(void) {
+    if (pot_get_value(1) < CURRENT_MIN) {
+        set_pwm_duty_cycle(0); // LED apagado
+    } else if (pot_get_value(1) <= CURRENT_MAX) {
+        uint16_t duty = (uint16_t)((pot_get_value(1) - CURRENT_MIN) * 1000 / (CURRENT_MAX - CURRENT_MIN));
+        set_pwm_duty_cycle(duty); // Ajustar intensidad del LED
+    } else {
+        set_pwm_duty_cycle(1000); // Máxima intensidad
+    }
+}
+
+
+    

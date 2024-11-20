@@ -1,33 +1,40 @@
 #include "timer_exti.h"
 
-void SystemInit_PF(void)
+void system_init(void)
 {
     rcc_clock_setup_pll(&rcc_hse_configs[RCC_CLOCK_HSE8_72MHZ]);
     rcc_periph_clock_enable(RCC_GPIOA);
+    rrc_periph_clock_enable(RCC_GPIOB);
     rcc_periph_clock_enable(RCC_TIM1);
     rcc_periph_clock_enable(RCC_TIM2);
     rcc_periph_clock_enable(RCC_AFIO);
 }
-void GPIO_setup_PF(void)
+void gpio_setup(void)
 {
+   
     gpio_set_mode(EXTI_PORT, GPIO_MODE_INPUT, GPIO_CNF_INPUT_PULL_UPDOWN, EXTI_PIN0|EXTI_PIN1);
+
+    // Configurar PA10 como salida alternativa para PWM
+    gpio_set_mode(GPIOA, GPIO_MODE_OUTPUT_50_MHZ,GPIO_CNF_OUTPUT_ALTFN_PUSHPULL, GPIO10);
 }
+
+
 
 void TMR_setup_PF(void)
 {
     /*timer2 config*/
     rcc_periph_reset_pulse(RST_TIM2);
-    timer_set_prescaler(TIM2,7200-1);     //cuenta cada 1 mseg
+    timer_set_prescaler(TIM2,PREESCALER_TM2-1);     //cuenta cada 0.1 mseg
     timer_direction_up(TIM2);
 }
 
 
-void TMR_pwm(void) {
+void TMR_setup_pwm(void) {
     // Configurar Timer 1 para PWM en el canal 3
     timer_disable_counter(TIM1);
     timer_set_mode(TIM1, TIM_CR1_CKD_CK_INT, TIM_CR1_CMS_EDGE, TIM_CR1_DIR_UP);
-    timer_set_prescaler(TIM1, 72 - 1); // 1 MHz timer clock
-    timer_set_period(TIM1, 1000);      // 1 kHz PWM frecuencia
+    timer_set_prescaler(TIM1, PREESCALER_TM1 - 1); // 1 MHz timer clock
+    timer_set_period(TIM1, PERIOD_TM1);      // 1 kHz PWM frecuencia
     timer_set_oc_mode(TIM1, TIM_OC3, TIM_OCM_PWM1);
     timer_enable_oc_output(TIM1, TIM_OC3);
     timer_enable_break_main_output(TIM1);
