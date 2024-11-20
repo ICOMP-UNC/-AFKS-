@@ -12,7 +12,7 @@ int main(void) {
     lcd_init();
 
     while (1) {
-        pot_leds_control();
+   
         update_display();
     }
     return 0;
