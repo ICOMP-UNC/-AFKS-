@@ -42,10 +42,14 @@
  */
 #define HALF_PERIOD 100
 
+#define MS_CONVERSION 10 // conversion de us a mS
+
 //uint32_t phase_shift_buffer[N_PHASE_SHIFT]={0};
-uint32_t desfasaje=0;
-uint32_t phase_shift=0;
-float power_factor=0;
+
+
+static volatile uint32_t phase_shift_buffer[N_PHASE_SHIFT]; /**< Buffer para almacenar los desplazamientos de fase. */
+static volatile uint32_t  counter=0;
+
 
 /**
  * @brief Enable the clock for the involved modules.

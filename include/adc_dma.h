@@ -41,6 +41,9 @@
 
 #define ADC_BUFFER_SIZE (ADC_SAMPLE_COUNT * ADC_CHANNEL_COUNT)  // Tamaño del buffer para almacenar las muestras ADC
 
+
+static volatile uint16_t ADC_BUFFER[ADC_BUFFER_SIZE];  // Buffer compartido para ambos canales ADC
+
 /**
  * @brief Configures ADC pins and initializes DMA for sensor data acquisition.
  *
@@ -74,3 +77,4 @@ void config_adc_dma(void);
  */
 
 float get_sensor_values(void);
+

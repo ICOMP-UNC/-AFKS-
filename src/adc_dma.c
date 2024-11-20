@@ -2,7 +2,7 @@
 
 
 
-static volatile uint16_t ADC_BUFFER[ADC_BUFFER_SIZE];  // Buffer compartido para ambos canales
+
 
 // Prototipos de las funciones
 
