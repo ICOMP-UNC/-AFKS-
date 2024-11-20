@@ -38,7 +38,7 @@
 /** @brief ADC sample time configuration. */
 #define SAMPLE_TIME_CYCLES ADC_SMPR_SMP_28DOT5CYC
 
-
+/** @brief ADC buffer size. */
 #define ADC_BUFFER_SIZE (ADC_SAMPLE_COUNT * ADC_CHANNEL_COUNT)  // Tamaño del buffer para almacenar las muestras ADC
 
 
