@@ -46,7 +46,7 @@ float get_sensor_values(uint8_t channel) {
 }
 
 /**
- * @brief Updates the LCD with the latest sensor values.
+ * @brief Updates the LCD with the latest sensor values and checks for the current value.
  * 
  * Displays voltage, current, power, and phase shift on the LCD across four lines.
  * - Line 1: Voltage (A0 channel).
@@ -77,6 +77,9 @@ void update_values(void) {
     snprintf(line, sizeof(line), "Phase : %u mS", (unsigned int)(average_phase_shift() / 10));
     lcd_set_cursor(3, 0);
     lcd_print_string(line);
+    
+    //Checks current
+    adjust_led_intensity();
 }
 
 /**
