@@ -18,7 +18,7 @@ int average_phase_shift(void)
 
 
 
-float pot_get_value(uint8_t channel) {
+float get_sensor_values(uint8_t channel) {
     uint32_t ac = 0;
 
     // Suma los valores en el buffer dependiendo del canal seleccionado
@@ -44,16 +44,16 @@ float pot_get_value(uint8_t channel) {
 
 void update_display(void) {
       char line[17];
-    float power = pot_get_value(0) * pot_get_value(1);
+    float power = get_sensor_values(0) * get_sensor_values(1);
  
      // Show ADC0 value on the first line
-    snprintf(line, sizeof(line), "Volt A0: %u V", (unsigned int)pot_get_value(0));
+    snprintf(line, sizeof(line), "Volt A0: %u V", (unsigned int)get_sensor_values(0));
     lcd_set_cursor(0, 0);
     lcd_print_string(line);
 
 
     // Show ADC1 value on the second line
-    snprintf(line, sizeof(line), "Current: %u A", (unsigned int) pot_get_value(1));
+    snprintf(line, sizeof(line), "Current: %u A", (unsigned int) get_sensor_values(1));
     lcd_set_cursor(1, 0);
     lcd_print_string(line);
 
