@@ -1,31 +1,62 @@
+/**
+ * @file lcd.c
+ * @brief Implementation of functions for controlling an LCD over I2C using a PCF8574 I/O expander.
+ * 
+ * This file contains functions for initializing and controlling an LCD, including sending data,
+ * printing characters or strings, clearing the display, and setting the cursor position.
+ * 
+ * @note This file is intended to be used with its corresponding header file `lcd.h`.
+ */
 
 #include "lcd.h"
 
-/** Set the EN line high to latch the command, then set it low */
+/**
+ * @brief Sends a pulse to the LCD's Enable (EN) pin to latch data.
+ * 
+ * This function sets the Enable line (EN) high to latch the command, then sets it low.
+ * It uses I2C to communicate with the PCF8574 I/O expander connected to the LCD.
+ * 
+ * @param data The byte to be latched.
+ */
 void lcd_pulse_enable(uint8_t data) {
-    uint8_t d = data | LCD_EN; 
+    uint8_t d = data | LCD_EN;
     i2c_transfer7(I2C1, PCF8574_ADDRESS, &d, 1, NULL, 0);
-    delay_ms(2); // Incremento de retardo para estabilidad
+    delay_ms(2);
 
     d = data & ~LCD_EN;
     i2c_transfer7(I2C1, PCF8574_ADDRESS, &d, 1, NULL, 0);
-    delay_ms(2); // Incremento de retardo
+    delay_ms(2);
 }
 
-/** Prepare a nibble to be sent to the LCD and call pulse to latch it */
+/**
+ * @brief Sends a 4-bit nibble to the LCD and latches it.
+ * 
+ * @param nibble The 4-bit nibble to be sent (upper nibble of a byte).
+ * @param mode   The mode of the command (`LCD_RS` for data, `0` for commands).
+ */
 void lcd_send_nibble(uint8_t nibble, uint8_t mode) {
     uint8_t data = (nibble & 0xF0) | mode | LCD_BACKLIGHT;
     lcd_pulse_enable(data);
 }
 
-/** Split a byte into two nibbles and send each one to the LCD */
+/**
+ * @brief Sends an 8-bit byte to the LCD by splitting it into two 4-bit nibbles.
+ * 
+ * @param byte The byte to be sent.
+ * @param mode The mode of the command (`LCD_RS` for data, `0` for commands).
+ */
 void lcd_send_byte(uint8_t byte, uint8_t mode) {
-    lcd_send_nibble(byte & 0xF0, mode);        
-    lcd_send_nibble((byte << 4) & 0xF0, mode); 
-    delay_ms(2); 
+    lcd_send_nibble(byte & 0xF0, mode);
+    lcd_send_nibble((byte << 4) & 0xF0, mode);
+    delay_ms(2);
 }
 
-/** Initialize the LCD by setting up the I2C, configuring the LCD mode, and clearing the display */
+/**
+ * @brief Initializes the LCD and configures it for 4-bit mode.
+ * 
+ * This function sets up the I2C peripheral, initializes the LCD, and configures its
+ * display settings (e.g., 2-line display, no cursor blinking). The LCD is cleared after initialization.
+ */
 void lcd_init(void) {
     rcc_periph_clock_enable(RCC_GPIOB);
     rcc_periph_clock_enable(RCC_I2C1);
@@ -57,21 +88,45 @@ void lcd_init(void) {
     delay_ms(2);
 }
 
+/**
+ * @brief Prints a single character to the LCD at the current cursor position.
+ * 
+ * @param c The character to print.
+ */
 void lcd_print_char(char c) {
     lcd_send_byte(c, LCD_RS);
 }
 
+/**
+ * @brief Prints a string to the LCD starting at the current cursor position.
+ * 
+ * @param str The null-terminated string to print.
+ */
 void lcd_print_string(const char* str) {
     while (*str) {
         lcd_print_char(*str++);
     }
 }
 
+/**
+ * @brief Clears the LCD display.
+ * 
+ * Sends the `LCD_CLEARDISPLAY` command to the LCD to clear its contents.
+ */
 void lcd_clear(void) {
     lcd_send_byte(LCD_CLEARDISPLAY, 0);
     delay_ms(2);
 }
 
+/**
+ * @brief Sets the cursor to a specific position on the LCD.
+ * 
+ * This function calculates the DDRAM address based on the specified row and column
+ * and sends the `LCD_SETDDRAMADDR` command to position the cursor.
+ * 
+ * @param row The row number (0 to 3 for a 4-line display).
+ * @param col The column number (0 to max column of the display).
+ */
 void lcd_set_cursor(uint8_t row, uint8_t col) {
     uint8_t address;
 
@@ -85,6 +140,18 @@ void lcd_set_cursor(uint8_t row, uint8_t col) {
 
     lcd_send_byte(LCD_SETDDRAMADDR | address, 0);
 }
+
+/**
+ * @brief Delays the execution for a specified number of milliseconds.
+ * 
+ * @param ms The number of milliseconds to delay.
+ */
+void delay_ms(uint32_t ms) {
+    for (uint32_t i = 0; i < ms * 8000; i++) {
+        __asm__("nop");
+    }
+}
+
 
 void delay_ms(uint32_t ms) {
     for (uint32_t i = 0; i < ms * 8000; i++) {
