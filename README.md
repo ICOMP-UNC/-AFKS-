@@ -54,10 +54,10 @@ The information is shown on a display, allowing real-time readings of measuremen
 
 ---
 
-## :electric_plug:Schematic Diagram
+## 🧠State Machine Diagram
 
-![Schematic Diagram](https://github.com/user-attachments/assets/85041b3e-340c-4535-aa57-fe148c72804a)
-Arrangement of the components used in the project with their respective connections.
+![tpED3](https://github.com/user-attachments/assets/0edde69d-0517-4a00-9f6a-2ce3630dc0d7)
+Arrangement of the events on a state machine diagram in order to model and understand system behavior.
 
 ---
 
@@ -65,4 +65,5 @@ Arrangement of the components used in the project with their respective connecti
 
 The project will include:
 - **Project exposition**: A complete explanation of the code and a hardware overview.  
-- **Video demonstration**: [YouTube video link](#)  
+- **Video demonstration**: https://youtu.be/-5vvS6dCAZk?si=XjdbSiEEBUvCcszg
+- **Images of the procedures**: https://docs.google.com/document/d/1DifapGZ7ypS7cmhRvBSe5U7aHENBWFwOeN3Th9-sfKg/edit?usp=sharing
